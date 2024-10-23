@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Process Off-Hire</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="notifications.css">
+</head>
+<body>
+    <div class="dashboard">
+        <header>
+            <h1>Process Off-Hire</h1>
+            <p class="subtitle">Handle early returns and generate credit notes</p>
+        </header>
+
+        <main>
+            <section class="rental-details">
+                <div class="status-container">
+                    <h2>Rental Status</h2>
+                    <span id="rentalStatus" class="status-active">Active</span>
+                </div>
+
+                <form id="offHireForm" class="off-hire-form">
+                    <input type="hidden" name="rentalId" value="rent_123">
+                    <input type="hidden" name="customerId" value="cus_123">
+                    <input type="hidden" name="paymentIntentId" value="pi_123">
+                    <input type="hidden" name="subscriptionId" value="sub_123">
+
+                    <div class="form-grid">
+                        <!-- Rental Dates -->
+                        <div class="form-group">
+                            <label for="startDate">Start Date</label>
+                            <input type="date" id="startDate" name="startDate" required readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="plannedEndDate">Planned End Date</label>
+                            <input type="date" id="plannedEndDate" name="plannedEndDate" required readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="actualEndDate">Actual End Date</label>
+                            <input type="date" id="actualEndDate" name="actualEndDate" required>
+                        </div>
+
+                        <!-- Rental Terms -->
+                        <div class="form-group">
+                            <label for="dailyRate">Daily Rate</label>
+                            <div class="input-with-prefix">
+                                <span class="prefix">$</span>
+                                <input type="number" id="dailyRate" name="dailyRate" required readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="paidAmount">Amount Paid</label>
+                            <div class="input-with-prefix">
+                                <span class="prefix">$</span>
+                                <input type="number" id="paidAmount" name="paidAmount" required readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="minHirePeriod">Minimum Hire Period (Days)</label>
+                            <input type="number" id="minHirePeriod" name="minHirePeriod" required readonly>
+                        </div>
+
+                        <!-- Fees -->
+                        <div class="form-group">
+                            <label for="deliveryFee">Delivery Fee</label>
+                            <div class="input-with-prefix">
+                                <span class="prefix">$</span>
+                                <input type="number" id="deliveryFee" name="deliveryFee" required readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="collectionFee">Collection Fee</label>
+                            <div class="input-with-prefix">
+                                <span class="prefix">$</span>
+                                <input type="number" id="collectionFee" name="collectionFee" required readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="creditPreview" class="credit-preview"></div>
+
+                    <div class="message-container"></div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="primary-button">Process Off-Hire</button>
+                        <button type="button" class="secondary-button" onclick="history.back()">Cancel</button>
+                    </div>
+                </form>
+            </section>
+
+            <section id="creditNoteDetails" class="credit-note-details hidden">
+                <!-- Credit note details will be populated here -->
+            </section>
+        </main>
+    </div>
+
+    <script type="module">
+        import { StripeIntegration } from './stripe-integration.js';
+        import { EarlyReturnHandler } from './early-return-handler.js';
+        import { OffHireProcessor } from './off-hire.js';
+
+        // Initialize handlers
+        const stripe = new StripeIntegration('your_publishable_key', 'your_account_id');
+        const earlyReturnHandler = new EarlyReturnHandler(stripe);
+        const offHireProcessor = new OffHireProcessor(earlyReturnHandler);
+
+        // Populate form with rental details (in real implementation, this would come from your backend)
+        document.addEventListener('DOMContentLoaded', () => {
+            const startDate = new Date();
+            const plannedEndDate = new Date();
+            plannedEndDate.setDate(plannedEndDate.getDate() + 7);
+
+            document.getElementById('startDate').value = startDate.toISOString().split('T')[0];
+            document.getElementById('plannedEndDate').value = plannedEndDate.toISOString().split('T')[0];
+            document.getElementById('dailyRate').value = '100';
+            document.getElementById('paidAmount').value = '700';
+            document.getElementById('minHirePeriod').value = '5';
+            document.getElementById('deliveryFee').value = '50';
+            document.getElementById('collectionFee').value = '50';
+        });
+    </script>
+</body>
+</html>

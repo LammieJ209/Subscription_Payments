@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Settings</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="notifications.css">
+</head>
+<body>
+    <div class="dashboard">
+        <header>
+            <h1>Payment Settings</h1>
+            <p class="subtitle">Customize your rental payment terms and billing preferences</p>
+        </header>
+        
+        <main>
+            <div class="tabs">
+                <button class="tab-button active" onclick="switchTab('defaultTerms')">Default Terms</button>
+                <button class="tab-button" onclick="switchTab('offHire')">Off-Hire Processing</button>
+                <button class="tab-button" onclick="switchTab('stripeIntegration')">Stripe Integration</button>
+            </div>
+
+            <!-- Default Terms Tab -->
+            <section id="defaultTerms" class="tab-content active">
+                <div class="settings-header">
+                    <h2>Default Payment Terms</h2>
+                    <button class="save-settings" onclick="saveSettings()">Save Settings</button>
+                </div>
+
+                <div class="settings-grid">
+                    <!-- Existing payment settings cards -->
+                    <div class="settings-card">
+                        <h3>Rental Cycle</h3>
+                        <div class="setting-content">
+                            <div class="radio-group">
+                                <div class="radio-option">
+                                    <input type="radio" id="fiveDay" name="rentalCycle" value="5" checked>
+                                    <label for="fiveDay">5-Day Week</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" id="sevenDay" name="rentalCycle" value="7">
+                                    <label for="sevenDay">7-Day Week</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-card">
+                        <h3>Upfront Payment</h3>
+                        <div class="setting-content">
+                            <div class="input-group">
+                                <label for="defaultUpfront">Default Upfront Percentage</label>
+                                <div class="input-with-suffix">
+                                    <input type="number" id="defaultUpfront" value="25" min="0" max="100">
+                                    <span class="suffix">%</span>
+                                </div>
+                            </div>
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="allowCustomUpfront" checked>
+                                <label for="allowCustomUpfront">Allow customers to adjust upfront amount</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-card">
+                        <h3>Additional Fees</h3>
+                        <div class="setting-content">
+                            <div class="fee-group">
+                                <div class="fee-item">
+                                    <label for="deliveryFee">Delivery Fee</label>
+                                    <div class="input-with-prefix">
+                                        <span class="prefix">$</span>
+                                        <input type="number" id="deliveryFee" value="50" min="0">
+                                    </div>
+                                    <div class="checkbox-group">
+                                        <input type="checkbox" id="deliveryFeeUpfront" checked>
+                                        <label for="deliveryFeeUpfront">Charge delivery fee upfront</label>
+                                    </div>
+                                </div>
+                                <div class="fee-item">
+                                    <label for="collectionFee">Collection Fee</label>
+                                    <div class="input-with-prefix">
+                                        <span class="prefix">$</span>
+                                        <input type="number" id="collectionFee" value="50" min="0">
+                                    </div>
+                                    <div class="checkbox-group">
+                                        <input type="checkbox" id="collectionFeeOnReturn" checked>
+                                        <label for="collectionFeeOnReturn">Charge collection fee on return</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="includeFeesUpfront" checked>
+                                <label for="includeFeesUpfront">Include fees in upfront payment</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-card">
+                        <h3>Payment Rules</h3>
+                        <div class="setting-content">
+                            <div class="rule-group">
+                                <div class="rule-item">
+                                    <label for="minRentalPeriod">Minimum Rental Period (days)</label>
+                                    <input type="number" id="minRentalPeriod" value="5" min="1">
+                                </div>
+                                <div class="rule-item">
+                                    <label for="maxRentalPeriod">Maximum Rental Period (days)</label>
+                                    <input type="number" id="maxRentalPeriod" value="365" min="1">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Off-Hire Tab -->
+            <section id="offHire" class="tab-content">
+                <div class="settings-header">
+                    <h2>Off-Hire Processing</h2>
+                    <button class="save-settings" onclick="saveOffHireSettings()">Save Settings</button>
+                </div>
+
+                <div class="settings-grid">
+                    <div class="settings-card">
+                        <h3>Early Return Policy</h3>
+                        <div class="setting-content">
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="allowEarlyReturns" checked>
+                                <label for="allowEarlyReturns">Allow early returns</label>
+                            </div>
+                            <div class="input-group">
+                                <label for="minRetentionPeriod">Minimum Retention Period (days)</label>
+                                <input type="number" id="minRetentionPeriod" value="5" min="1">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-card">
+                        <h3>Refund Settings</h3>
+                        <div class="setting-content">
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="enableAutoRefunds" checked>
+                                <label for="enableAutoRefunds">Enable automatic refunds</label>
+                            </div>
+                            <div class="input-group">
+                                <label for="refundProcessingTime">Refund Processing Time (days)</label>
+                                <input type="number" id="refundProcessingTime" value="5" min="1" max="10">
+                            </div>
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="refundDeliveryFee">
+                                <label for="refundDeliveryFee">Refund delivery fee</label>
+                            </div>
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="refundCollectionFee">
+                                <label for="refundCollectionFee">Refund collection fee</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-card">
+                        <h3>Credit Note Settings</h3>
+                        <div class="setting-content">
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="automaticCreditNotes" checked>
+                                <label for="automaticCreditNotes">Generate automatic credit notes</label>
+                            </div>
+                            <div class="input-group">
+                                <label for="creditNotePrefix">Credit Note Prefix</label>
+                                <input type="text" id="creditNotePrefix" value="CN-" maxlength="10">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-card">
+                        <h3>Notification Settings</h3>
+                        <div class="setting-content">
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="notifyCustomer" checked>
+                                <label for="notifyCustomer">Send customer notifications</label>
+                            </div>
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="notifyCompany" checked>
+                                <label for="notifyCompany">Send company notifications</label>
+                            </div>
+                            <div class="input-group">
+                                <label for="notificationEmail">Notification Email</label>
+                                <input type="email" id="notificationEmail" placeholder="company@example.com">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Stripe Integration Tab -->
+            <section id="stripeIntegration" class="tab-content">
+                <div class="settings-header">
+                    <h2>Stripe Integration</h2>
+                    <button class="save-settings" onclick="saveStripeSettings()">Save Settings</button>
+                </div>
+
+                <div class="settings-grid">
+                    <div class="settings-card">
+                        <h3>Stripe Account</h3>
+                        <div class="setting-content">
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="stripeConnected" checked>
+                                <label for="stripeConnected">Stripe account connected</label>
+                            </div>
+                            <button class="connect-stripe" onclick="connectStripe()">Connect to Stripe</button>
+                        </div>
+                    </div>
+
+                    <div class="settings-card">
+                        <h3>Payment Processing</h3>
+                        <div class="setting-content">
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="enableStripePayments" checked>
+                                <label for="enableStripePayments">Enable Stripe payments</label>
+                            </div>
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="enableSubscriptions" checked>
+                                <label for="enableSubscriptions">Enable subscriptions</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-card">
+                        <h3>Webhook Settings</h3>
+                        <div class="setting-content">
+                            <div class="input-group">
+                                <label for="webhookUrl">Webhook URL</label>
+                                <input type="text" id="webhookUrl" value="https://example.com/webhook" readonly>
+                            </div>
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="enableWebhooks" checked>
+                                <label for="enableWebhooks">Enable webhooks</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-card">
+                        <h3>Notification Settings</h3>
+                        <div class="setting-content">
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="notifyOnPaymentSuccess" checked>
+                                <label for="notifyOnPaymentSuccess">Notify on payment success</label>
+                            </div>
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="notifyOnPaymentFailure" checked>
+                                <label for="notifyOnPaymentFailure">Notify on payment failure</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="app.js"></script>
+    <script>
+        function switchTab(tabId) {
+            // Hide all tab content
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Deactivate all tab buttons
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+
+            // Show selected tab content
+            document.getElementById(tabId).classList.add('active');
+
+            // Activate selected tab button
+            document.querySelector(`[onclick="switchTab('${tabId}')"]`).classList.add('active');
+        }
+
+        function saveStripeSettings() {
+            // Implementation for saving Stripe settings
+        }
+
+        function connectStripe() {
+            // Implementation for connecting to Stripe
+        }
+    </script>
+</body>
+</html>

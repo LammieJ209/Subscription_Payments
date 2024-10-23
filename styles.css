@@ -1,0 +1,396 @@
+:root {
+    --primary-color: #1a73e8;
+    --primary-hover: #1557b0;
+    --secondary-color: #3c4043;
+    --background-color: #f8f9fa;
+    --surface-color: #ffffff;
+    --border-color: #dadce0;
+    --text-primary: #202124;
+    --text-secondary: #5f6368;
+    --error-color: #d93025;
+    --success-color: #188038;
+    --warning-color: #f29900;
+    --shadow-1: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+    --shadow-2: 0 1px 3px 0 rgba(60, 64, 67, 0.3), 0 4px 8px 3px rgba(60, 64, 67, 0.15);
+    --font-family: 'Google Sans', Roboto, Arial, sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--background-color);
+    color: var(--text-primary);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+.dashboard {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+}
+
+header {
+    margin-bottom: 2rem;
+}
+
+h1 {
+    color: var(--text-primary);
+    font-size: 1.75rem;
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+/* Tabs */
+.tabs {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.tab-button {
+    background: none;
+    border: none;
+    padding: 1rem 0.5rem;
+    font-family: var(--font-family);
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    position: relative;
+    transition: color 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    font-weight: 500;
+}
+
+.tab-button:hover {
+    color: var(--primary-color);
+}
+
+.tab-button.active {
+    color: var(--primary-color);
+}
+
+.tab-button.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--primary-color);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* Settings Header */
+.settings-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.settings-header h2 {
+    color: var(--text-primary);
+    font-size: 1.375rem;
+    font-weight: 400;
+}
+
+/* Settings Grid */
+.settings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 1rem;
+}
+
+.settings-card {
+    background: var(--surface-color);
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-1);
+    transition: box-shadow 0.3s ease;
+}
+
+.settings-card:hover {
+    box-shadow: var(--shadow-2);
+}
+
+.settings-card h3 {
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+/* Form Elements */
+.setting-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.input-group label {
+    display: block;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="email"] {
+    width: 100%;
+    padding: 0.625rem 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-family: var(--font-family);
+    font-size: 0.875rem;
+    color: var(--text-primary);
+    transition: border-color 0.2s ease;
+    background: var(--surface-color);
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.input-with-prefix,
+.input-with-suffix {
+    position: relative;
+}
+
+.prefix,
+.suffix {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+.prefix {
+    left: 0.75rem;
+}
+
+.suffix {
+    right: 0.75rem;
+}
+
+.input-with-prefix input {
+    padding-left: 2rem;
+}
+
+.input-with-suffix input {
+    padding-right: 2rem;
+}
+
+/* Checkboxes */
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+input[type="checkbox"] {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--text-secondary);
+    border-radius: 2px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+input[type="checkbox"]:checked {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 2px;
+    width: 4px;
+    height: 8px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+/* Radio Buttons */
+.radio-group {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.radio-option {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+input[type="radio"] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--text-secondary);
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+input[type="radio"]:checked {
+    border-color: var(--primary-color);
+}
+
+input[type="radio"]:checked::after {
+    content: '';
+    position: absolute;
+    left: 3px;
+    top: 3px;
+    width: 10px;
+    height: 10px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+}
+
+/* Buttons */
+.save-settings {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.5rem 1.5rem;
+    border-radius: 4px;
+    font-family: var(--font-family);
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+}
+
+.save-settings:hover {
+    background-color: var(--primary-hover);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Status Indicators */
+.status-active {
+    color: var(--success-color);
+    font-weight: 500;
+}
+
+.status-returned {
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+/* Messages */
+.success-message,
+.error-message {
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+}
+
+.success-message {
+    background-color: #e6f4ea;
+    color: var(--success-color);
+    border: 1px solid #c6e7d1;
+}
+
+.error-message {
+    background-color: #fce8e6;
+    color: var(--error-color);
+    border: 1px solid #f6cbc7;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .dashboard {
+        margin: 1rem auto;
+        padding: 0 1rem;
+    }
+
+    .settings-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tabs {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .tab-button {
+        width: 100%;
+        text-align: left;
+        padding: 1rem;
+    }
+
+    .radio-group {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+}
+
+/* Loading States */
+.loading {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid var(--primary-color);
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

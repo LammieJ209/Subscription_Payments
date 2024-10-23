@@ -1,0 +1,153 @@
+/* Notification Styles */
+.notification-container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 400px;
+    max-height: 100vh;
+    overflow-y: auto;
+    padding: 1rem;
+    z-index: 1000;
+}
+
+.notification-item {
+    background: white;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-left: 4px solid transparent;
+}
+
+.notification-item.payment_success {
+    border-left-color: var(--success-color);
+}
+
+.notification-item.payment_failure {
+    border-left-color: var(--error-color);
+}
+
+.notification-item.subscription_renewal {
+    border-left-color: var(--primary-color);
+}
+
+.notification-item.subscription_payment_failure {
+    border-left-color: var(--warning-color);
+}
+
+.notification-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.notification-time {
+    font-size: 0.8rem;
+    color: var(--text-color);
+}
+
+.notification-metadata {
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--border-color);
+    font-size: 0.9rem;
+}
+
+.metadata-item {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.25rem;
+}
+
+.metadata-key {
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+/* Toast Notifications */
+.toast {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    background: white;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1100;
+    min-width: 300px;
+    max-width: 400px;
+    animation: slideIn 0.3s ease-out;
+}
+
+.toast.fade-out {
+    animation: slideOut 0.3s ease-out;
+}
+
+.toast-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.toast-header button {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-color);
+    padding: 0 0.5rem;
+}
+
+.toast.payment_success {
+    border-left: 4px solid var(--success-color);
+}
+
+.toast.payment_failure {
+    border-left: 4px solid var(--error-color);
+}
+
+.toast.subscription_renewal {
+    border-left: 4px solid var(--primary-color);
+}
+
+.toast.subscription_payment_failure {
+    border-left: 4px solid var(--warning-color);
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOut {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .notification-container {
+        width: 100%;
+        padding: 0.5rem;
+    }
+
+    .toast {
+        width: calc(100% - 2rem);
+        min-width: auto;
+        max-width: none;
+    }
+}
